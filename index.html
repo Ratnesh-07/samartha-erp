@@ -443,6 +443,7 @@ function loadData(){
     if(data.settings.pin && !unlocked){
       renderLockScreen();
     } else {
+      unlocked = true
       render();
     }
   }, (err)=>{
