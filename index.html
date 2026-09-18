@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7C3131">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Samartha Sweets & Mess ERP</title>
-<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
-<style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7C3131">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>Samartha Sweets &amp; Mess ERP</title>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+  <style>
   :root{
     --bg: #FAF6EC;
     --paper: #FFFDF8;
@@ -24,18 +24,22 @@
     --bad: #B24444;
     --shadow: 0 1px 0 rgba(43,35,24,0.06);
   }
+  :root{
+    --input-bg: #FFFDF8;
+  }
   html.dark{
-    --bg: #1E1B16;
-    --paper: #2A251E;
-    --ink: #0000;
-    --ink-soft: #0000;
-    --maroon: #C97070;
-    --maroon-dark: #E39696;
-    --turmeric: #E3B24E;
-    --line: #3D362A;
-    --good: #6FBF8C;
-    --bad: #E38080;
-    --shadow: 0 1px 0 rgba(0,0,0,0.2);
+    --bg: #000000;
+    --paper: #141414;
+    --ink: #FFFFFF;
+    --ink-soft: #C9C2B4;
+    --maroon: #E38888;
+    --maroon-dark: #FF9E9E;
+    --turmeric: #F2C463;
+    --line: #333333;
+    --good: #7FD99C;
+    --bad: #FF8A8A;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    --input-bg: #1C1C1C;
   }
   body{ transition: background 0.2s, color 0.2s; }
   *{box-sizing:border-box;}
@@ -126,7 +130,7 @@
     border: 1px solid var(--line);
     border-radius: 7px;
     font-size: 14px;
-    background: #fff;
+    background: var(--input-bg);
     color: var(--ink);
   }
   button.primary{
@@ -310,33 +314,44 @@
   input:checked + .slider{ background: var(--maroon); }
   input:checked + .slider:before{ transform: translateX(18px); }
   .badge.low{ background:#fbe9d3; color: var(--turmeric); }
-  .diag{ font-size:11px; color:var(--ink-soft); margin-top:14px; text-align:left; background:#fff; border:1px solid var(--line); border-radius:8px; padding:10px; }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-</head>
-<body>
-<div class="app" id="app">
-  <div class="loading">Loading your register&hellip;</div>
-</div>
-
-<script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+ </head>
+ <body>
+  <div class="app" id="app">
+   <div class="loading">Loading your register…</div>
+  </div>
+  <script>
 // ====== PASTE YOUR FIREBASE CONFIG HERE (see SETUP.md) ======
-  const FIREBASE_CONFIG = {
+const FIREBASE_CONFIG = {
   apiKey: "AIzaSyA2moJXDASgS8tZrbDQQTUPM_76pSSmtF8",
   authDomain: "samarth-sweets-and-mess.firebaseapp.com",
   projectId: "samarth-sweets-and-mess",
   storageBucket: "samarth-sweets-and-mess.firebasestorage.app",
   messagingSenderId: "493558387228",
-  appId: "1:493558387228:web:f034e4610382c0b95145d9",
-  measurementId: "G-CVY987TY6S"
+  appId: "1:493558387228:web:f034e4610382c0b95145d9"
 };
-
 // ================================================================
 
 const STORAGE_KEY = 'mess-data-v1';
 const LOGO_B64 = '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';
 const RATES = { Boy: 2500, Girl: 2200 };
+function rateFor(student){
+  return (student.customRate !== undefined && student.customRate !== null && student.customRate !== '')
+    ? Number(student.customRate)
+    : RATES[student.gender];
+}
+function hasJoinedByMonth(student, mk){
+  if(!student.joinDate) return true;
+  return student.joinDate.slice(0,7) <= mk;
+}
 const TIFFIN_RATE = 60;
+const DEFAULT_TIFFIN_MENU = [
+  { id: 'full-tiffin', name: 'Full Tiffin', price: 60 },
+  { id: 'chapati', name: 'Chapati (each)', price: 10 },
+  { id: 'bhaji', name: 'Bhaji', price: 20 },
+  { id: 'rice-dal', name: 'Rice + Dal', price: 25 }
+];
 
 const DEFAULT_PRODUCTS = [
   { id: 'beetroot-barfi', name: 'Beetroot Barfi', category: 'Sweet', packets: [
@@ -351,7 +366,7 @@ const DEFAULT_PRODUCTS = [
   ]}
 ];
 
-let data = { students: [], attendance: {}, payments: [], tiffinLog: [], products: DEFAULT_PRODUCTS, sweetSales: [], production: [], expenses: [], settings: { dueDay: 5, darkMode: false, pin: null, lowStock: {} } };
+let data = { students: [], attendance: {}, payments: [], tiffinLog: [], tiffinMenu: DEFAULT_TIFFIN_MENU, products: DEFAULT_PRODUCTS, sweetSales: [], production: [], expenses: [], settings: { dueDay: 5, darkMode: false, pin: null, lowStock: {} } };
 let currentTab = 'dashboard';
 let attMonth = new Date();
 let attSelectedStudent = null;
@@ -361,8 +376,6 @@ let revenueTrendChart = null;
 let selectedPendingIds = new Set();
 let unlocked = false;
 let pinEntryValue = '';
-let connectTimeoutId = null;
-let gotFirstResponse = false;
 
 function lastNMonths(n){
   const out = [];
@@ -382,6 +395,7 @@ function normalizeData(raw){
   d.attendance = d.attendance || {};
   d.payments = d.payments || [];
   d.tiffinLog = d.tiffinLog || [];
+  d.tiffinMenu = (d.tiffinMenu && d.tiffinMenu.length) ? d.tiffinMenu : DEFAULT_TIFFIN_MENU;
   d.products = (d.products && d.products.length && d.products[0].packets) ? d.products : DEFAULT_PRODUCTS;
   d.sweetSales = d.sweetSales || [];
   d.production = d.production || [];
@@ -390,25 +404,6 @@ function normalizeData(raw){
   d.settings.dueDay = d.settings.dueDay || 5;
   d.settings.lowStock = d.settings.lowStock || {};
   return d;
-}
-
-function renderConnectionTrouble(){
-  document.getElementById('app').innerHTML = `
-    <div style="max-width:460px;margin:50px auto;padding:0 16px;">
-      <div class="card">
-        <h2>Taking longer than usual&hellip;</h2>
-        <div class="student-meta">The app has been waiting more than 12 seconds for a response from the shared database and hasn't heard back — no data, but also no error. This almost always means something on this network is silently blocking the connection to Google's servers, rather than a problem with your data or account.</div>
-        <div class="diag">
-          <strong>Things to try, in order:</strong><br>
-          1. Try this same link on mobile data instead of Wi-Fi.<br>
-          2. Try a different Wi-Fi network if you have one.<br>
-          3. Check if a VPN, firewall, or antivirus on this device might be blocking <code>firestore.googleapis.com</code>.<br>
-          4. Reload this page — sometimes the very first connection is slow.
-        </div>
-        <button class="primary" style="margin-top:14px;" onclick="location.reload()">Reload</button>
-      </div>
-    </div>
-  `;
 }
 
 function loadData(){
@@ -423,17 +418,7 @@ function loadData(){
     document.getElementById('app').innerHTML = '<div class="card"><div class="empty">Firebase could not start. Double-check the config values in index.html.</div></div>';
     return;
   }
-
-  // If we never hear back — success or error — within 12s, something on the
-  // network is silently blocking the connection. Show a helpful message
-  // instead of spinning forever.
-  connectTimeoutId = setTimeout(()=>{
-    if(!gotFirstResponse) renderConnectionTrouble();
-  }, 12000);
-
   db.collection('messShared').doc('main').onSnapshot((snap)=>{
-    gotFirstResponse = true;
-    if(connectTimeoutId) clearTimeout(connectTimeoutId);
     if(snap.exists && snap.data().json){
       try{ data = normalizeData(JSON.parse(snap.data().json)); }catch(e){ data = normalizeData(data); }
     } else {
@@ -443,12 +428,10 @@ function loadData(){
     if(data.settings.pin && !unlocked){
       renderLockScreen();
     } else {
-      unlocked = true
+      unlocked = true;
       render();
     }
   }, (err)=>{
-    gotFirstResponse = true;
-    if(connectTimeoutId) clearTimeout(connectTimeoutId);
     console.error('Firestore error', err);
     document.getElementById('app').innerHTML = '<div class="card"><div class="empty">Could not connect to the shared database. Check your internet connection and that Firestore rules allow access (see SETUP.md).</div></div>';
   });
@@ -497,14 +480,47 @@ function renderLockScreen(){
 
 async function saveData(){
   try{
-    await db.collection('messShared').doc('main').set({ json: JSON.stringify(data), updatedAt: Date.now() });
+    const payload = JSON.stringify(data);
+    if(payload.length > 900000){
+      alert('This save is too large (' + Math.round(payload.length/1024) + ' KB). This usually means a photo wasn\'t compressed properly. Try removing and re-adding it.');
+      return;
+    }
+    await db.collection('messShared').doc('main').set({ json: payload, updatedAt: Date.now() });
   }catch(e){
     console.error('save failed', e);
-    alert('Could not save — check your internet connection.');
+    if(e.code === 'permission-denied'){
+      alert('Could not save — the database rejected this write (permission-denied). Check your Firestore security rules.');
+    } else if(e.code){
+      alert('Could not save — ' + e.code + ': ' + e.message);
+    } else {
+      alert('Could not save — check your internet connection.');
+    }
   }
 }
 
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+function resizeImageFile(file, maxDim){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > h && w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; }
+        else if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.6));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 function monthKey(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); }
 function fmtMoney(n){ return '₹' + n.toLocaleString('en-IN'); }
 
@@ -655,7 +671,7 @@ function renderDashboard(el){
   const monthLabel = new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'});
   const paidThisMonth = data.payments.filter(p=>p.month===mk);
   const collected = paidThisMonth.reduce((s,p)=>s+p.amount,0);
-  const pendingStudents = data.students.filter(s=>!paidThisMonth.find(p=>p.studentId===s.id));
+  const pendingStudents = data.students.filter(s=>hasJoinedByMonth(s, mk) && !paidThisMonth.find(p=>p.studentId===s.id));
   const unpaidTiffin = data.tiffinLog.filter(t=>!t.paid);
   const unpaidTiffinTotal = unpaidTiffin.reduce((s,t)=>s+t.amount,0);
   const sweetsSalesThisMonth = data.sweetSales.filter(s=>s.date.slice(0,7)===mk);
@@ -701,7 +717,7 @@ function renderDashboard(el){
           <div class="student-row">
             <div>
               <div class="student-name">${s.name}</div>
-              <div class="student-meta">Mess fee · ${fmtMoney(RATES[s.gender])} · ${monthLabel}</div>
+              <div class="student-meta">Mess fee · ${fmtMoney(rateFor(s))} · ${monthLabel}</div>
             </div>
             <div style="display:flex;gap:6px;align-items:center;">
               ${overdue?'<span class="badge due">OVERDUE</span>':''}
@@ -747,7 +763,7 @@ function renderDashboard(el){
   el.querySelectorAll('.dash-pay-mess').forEach(btn=>{
     btn.onclick = async ()=>{
       const s = data.students.find(x=>x.id===btn.dataset.id);
-      data.payments.push({ id: uid(), studentId: s.id, month: mk, amount: RATES[s.gender], date: new Date().toISOString() });
+      data.payments.push({ id: uid(), studentId: s.id, month: mk, amount: rateFor(s), date: new Date().toISOString() });
       await saveData();
       render();
     };
@@ -755,7 +771,7 @@ function renderDashboard(el){
   el.querySelectorAll('.dash-remind-mess').forEach(btn=>{
     btn.onclick = ()=>{
       const s = data.students.find(x=>x.id===btn.dataset.id);
-      const message = `Hi ${s.name}, this is a reminder that your mess payment of ${fmtMoney(RATES[s.gender])} for ${monthLabel} is due. Please pay at your earliest convenience. Thank you!`;
+      const message = `Hi ${s.name}, this is a reminder that your mess payment of ${fmtMoney(rateFor(s))} for ${monthLabel} is due. Please pay at your earliest convenience. Thank you!`;
       sendReminder(s.name, s.phone, message);
     };
   });
@@ -835,6 +851,7 @@ function drawDashboardCharts(pendingCount, paidCount){
 
 // ---------- STUDENTS ----------
 let studentSearch = '';
+let editingStudentId = null;
 function renderStudents(el){
   const boys = data.students.filter(s=>s.gender==='Boy').length;
   const girls = data.students.filter(s=>s.gender==='Girl').length;
@@ -852,12 +869,15 @@ function renderStudents(el){
       </div>
       <div class="row">
         <div>
-          <label>Gender / rate</label>
+          <label>Gender / default rate</label>
           <select id="s-gender">
             <option value="Boy">Boy — ₹2500/mo</option>
             <option value="Girl">Girl — ₹2200/mo</option>
           </select>
         </div>
+        <div><label>Custom rate (optional)</label><input id="s-rate" type="number" min="0" placeholder="Leave blank for default"></div>
+      </div>
+      <div class="row">
         <div><label>Joining date</label><input id="s-join" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
       </div>
       <div class="row">
@@ -870,16 +890,44 @@ function renderStudents(el){
       <h2>All students</h2>
       <input id="student-search" placeholder="Search by name…" value="${studentSearch}" style="margin-bottom:10px;">
       <div id="student-list">
-        ${filtered.length===0 ? `<div class="empty">${data.students.length===0?'No students yet — add your first one above.':'No students match your search.'}</div>` : filtered.map(s=>`
+        ${filtered.length===0 ? `<div class="empty">${data.students.length===0?'No students yet — add your first one above.':'No students match your search.'}</div>` : filtered.map(s=>
+          editingStudentId===s.id ? `
+          <div class="student-row" style="flex-direction:column;align-items:stretch;">
+            <div class="row">
+              <div><label>Name</label><input class="edit-s-name" data-id="${s.id}" value="${s.name}"></div>
+            </div>
+            <div class="row">
+              <div><label>Gender</label><select class="edit-s-gender" data-id="${s.id}">
+                <option value="Boy" ${s.gender==='Boy'?'selected':''}>Boy</option>
+                <option value="Girl" ${s.gender==='Girl'?'selected':''}>Girl</option>
+              </select></div>
+              <div><label>Custom rate</label><input class="edit-s-rate" data-id="${s.id}" type="number" min="0" value="${s.customRate!=null?s.customRate:''}" placeholder="Default"></div>
+            </div>
+            <div class="row">
+              <div><label>Joining date</label><input class="edit-s-join" data-id="${s.id}" type="date" value="${s.joinDate}"></div>
+              <div><label>Phone</label><input class="edit-s-phone" data-id="${s.id}" value="${s.phone||''}"></div>
+            </div>
+            <div class="row">
+              <div><label>Replace photo (optional)</label><input class="edit-s-photo" data-id="${s.id}" type="file" accept="image/*"></div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="primary save-student-edit" data-id="${s.id}" style="flex:1;">Save</button>
+              <button class="ghost cancel-student-edit" style="flex:1;">Cancel</button>
+            </div>
+          </div>
+          ` : `
           <div class="student-row">
             <div class="row-with-avatar">
               ${s.photo ? `<img class="avatar" src="${s.photo}">` : `<div class="avatar-placeholder">${s.name.charAt(0).toUpperCase()}</div>`}
               <div>
                 <div class="student-name">${s.name}</div>
-                <div class="student-meta">${s.gender} · ${fmtMoney(RATES[s.gender])}/mo · joined ${new Date(s.joinDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}${s.phone?' · '+s.phone:''}</div>
+                <div class="student-meta">${s.gender} · ${fmtMoney(rateFor(s))}/mo${s.customRate!=null?' (custom)':''} · joined ${new Date(s.joinDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}${s.phone?' · '+s.phone:''}</div>
               </div>
             </div>
-            <button class="del" data-id="${s.id}">Remove</button>
+            <div style="display:flex;gap:6px;">
+              <button class="ghost edit-student-btn" data-id="${s.id}">Edit</button>
+              <button class="del" data-id="${s.id}">Remove</button>
+            </div>
           </div>
         `).join('')}
       </div>
@@ -889,20 +937,26 @@ function renderStudents(el){
   el.querySelector('#add-student-btn').onclick = async ()=>{
     const name = el.querySelector('#s-name').value.trim();
     const gender = el.querySelector('#s-gender').value;
+    const rateVal = el.querySelector('#s-rate').value;
+    const customRate = rateVal !== '' ? parseFloat(rateVal) : null;
     const joinDate = el.querySelector('#s-join').value;
     const phone = el.querySelector('#s-phone').value.trim();
     const photoFile = el.querySelector('#s-photo').files[0];
     if(!name){ alert('Please enter a name'); return; }
-    const newStudent = { id: uid(), name, gender, joinDate, phone, photo: null };
+    const newStudent = { id: uid(), name, gender, customRate, joinDate, phone, photo: null };
     const finish = async ()=>{
       data.students.push(newStudent);
       await saveData();
       render();
     };
     if(photoFile){
-      const reader = new FileReader();
-      reader.onload = async (e)=>{ newStudent.photo = e.target.result; await finish(); };
-      reader.readAsDataURL(photoFile);
+      try{
+        newStudent.photo = await resizeImageFile(photoFile, 200);
+        await finish();
+      }catch(e){
+        alert('Could not process that photo — saving without it.');
+        await finish();
+      }
     } else {
       await finish();
     }
@@ -921,6 +975,35 @@ function renderStudents(el){
       });
     };
   });
+  el.querySelectorAll('.edit-student-btn').forEach(btn=>{
+    btn.onclick = ()=>{ editingStudentId = btn.dataset.id; renderStudents(el); };
+  });
+  el.querySelectorAll('.cancel-student-edit').forEach(btn=>{
+    btn.onclick = ()=>{ editingStudentId = null; renderStudents(el); };
+  });
+  el.querySelectorAll('.save-student-edit').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const id = btn.dataset.id;
+      const s = data.students.find(x=>x.id===id);
+      if(!s) return;
+      s.name = el.querySelector(`.edit-s-name[data-id="${id}"]`).value.trim() || s.name;
+      s.gender = el.querySelector(`.edit-s-gender[data-id="${id}"]`).value;
+      const rateVal = el.querySelector(`.edit-s-rate[data-id="${id}"]`).value;
+      s.customRate = rateVal !== '' ? parseFloat(rateVal) : null;
+      s.joinDate = el.querySelector(`.edit-s-join[data-id="${id}"]`).value || s.joinDate;
+      s.phone = el.querySelector(`.edit-s-phone[data-id="${id}"]`).value.trim();
+      const photoFile = el.querySelector(`.edit-s-photo[data-id="${id}"]`).files[0];
+      const finish = async ()=>{
+        editingStudentId = null;
+        await saveData();
+        render();
+      };
+      if(photoFile){
+        try{ s.photo = await resizeImageFile(photoFile, 200); }catch(e){ alert('Could not process that photo — keeping the previous one.'); }
+      }
+      await finish();
+    };
+  });
 }
 
 // ---------- ATTENDANCE ----------
@@ -930,12 +1013,14 @@ function renderAttendance(el){
     return;
   }
   if(!attSelectedStudent) attSelectedStudent = data.students[0].id;
+  const selectedStudent = data.students.find(s=>s.id===attSelectedStudent);
   const mk = monthKey(attMonth);
   const year = attMonth.getFullYear(), month = attMonth.getMonth();
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const firstWeekday = new Date(year, month, 1).getDay();
   const studentAtt = (data.attendance[attSelectedStudent] && data.attendance[attSelectedStudent][mk]) || [];
   const presentCount = studentAtt.length;
+  const joinDateObj = selectedStudent ? new Date(selectedStudent.joinDate) : null;
 
   el.innerHTML = `
     <div class="card">
@@ -953,6 +1038,11 @@ function renderAttendance(el){
         ${Array(daysInMonth).fill(0).map((_,i)=>{
           const day = i+1;
           const isPresent = studentAtt.includes(day);
+          const thisDate = new Date(year, month, day);
+          const beforeJoin = joinDateObj && thisDate < new Date(joinDateObj.getFullYear(), joinDateObj.getMonth(), joinDateObj.getDate());
+          if(beforeJoin){
+            return `<div class="att-day" data-day="${day}" style="opacity:0.25;cursor:not-allowed;" title="Not yet enrolled">${day}</div>`;
+          }
           return `<div class="att-day ${isPresent?'present':''}" data-day="${day}">${day}</div>`;
         }).join('')}
       </div>
@@ -961,14 +1051,19 @@ function renderAttendance(el){
       </div>
     </div>
   `;
+  const selChip = el.querySelector('.chip.sel');
+  if(selChip) selChip.scrollIntoView({inline:'nearest', block:'nearest'});
   el.querySelectorAll('.chip[data-id]').forEach(c=>{
     c.onclick = ()=>{ attSelectedStudent = c.dataset.id; render(); };
   });
   el.querySelector('#prev-m').onclick = ()=>{ attMonth = new Date(year, month-1, 1); render(); };
   el.querySelector('#next-m').onclick = ()=>{ attMonth = new Date(year, month+1, 1); render(); };
   el.querySelectorAll('.att-day[data-day]').forEach(d=>{
+    const day = parseInt(d.dataset.day);
+    const thisDate = new Date(year, month, day);
+    const beforeJoin = joinDateObj && thisDate < new Date(joinDateObj.getFullYear(), joinDateObj.getMonth(), joinDateObj.getDate());
+    if(beforeJoin) return;
     d.onclick = async ()=>{
-      const day = parseInt(d.dataset.day);
       if(!data.attendance[attSelectedStudent]) data.attendance[attSelectedStudent] = {};
       if(!data.attendance[attSelectedStudent][mk]) data.attendance[attSelectedStudent][mk] = [];
       const arr = data.attendance[attSelectedStudent][mk];
@@ -989,9 +1084,10 @@ function renderPayments(el){
   const mk = monthKey(attMonth);
   const isCurrentMonth = mk === monthKey(new Date());
   const overdue = isCurrentMonth && isOverdueNow();
+  const eligibleStudents = data.students.filter(s=>hasJoinedByMonth(s, mk));
   const paidThisMonth = data.payments.filter(p=>p.month===mk);
   const totalCollected = paidThisMonth.reduce((sum,p)=>sum+p.amount,0);
-  const pendingCount = data.students.length - paidThisMonth.length;
+  const pendingCount = eligibleStudents.length - paidThisMonth.filter(p=>eligibleStudents.find(s=>s.id===p.studentId)).length;
   selectedPendingIds.forEach(id=>{ if(paidThisMonth.find(p=>p.studentId===id)) selectedPendingIds.delete(id); });
 
   el.innerHTML = `
@@ -1005,9 +1101,9 @@ function renderPayments(el){
         <div class="m-label">${attMonth.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</div>
         <button id="next-mp">›</button>
       </div>
-      ${data.students.map(s=>{
+      ${eligibleStudents.map(s=>{
         const payment = paidThisMonth.find(p=>p.studentId===s.id);
-        const rate = RATES[s.gender];
+        const rate = rateFor(s);
         return `
           <div class="student-row">
             <div class="row-with-avatar">
@@ -1019,7 +1115,7 @@ function renderPayments(el){
               </div>
             </div>
             ${payment
-              ? `<div style="display:flex;gap:6px;align-items:center;"><span class="badge paid">PAID</span><button class="ghost receipt-btn" data-id="${s.id}">Receipt</button></div>`
+              ? `<div style="display:flex;gap:6px;align-items:center;"><span class="badge paid">PAID</span><button class="ghost receipt-btn" data-id="${s.id}">Receipt</button><button class="ghost unmark-paid-btn" data-id="${payment.id}">Undo</button></div>`
               : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
                   ${overdue?'<span class="badge due">OVERDUE</span>':''}
                   <div style="display:flex;gap:6px;">
@@ -1048,7 +1144,7 @@ function renderPayments(el){
     bulkBtn.onclick = async ()=>{
       selectedPendingIds.forEach(id=>{
         const s = data.students.find(x=>x.id===id);
-        if(s) data.payments.push({ id: uid(), studentId: id, month: mk, amount: RATES[s.gender], date: new Date().toISOString() });
+        if(s) data.payments.push({ id: uid(), studentId: id, month: mk, amount: rateFor(s), date: new Date().toISOString() });
       });
       selectedPendingIds.clear();
       await saveData();
@@ -1064,6 +1160,14 @@ function renderPayments(el){
         amount: parseInt(btn.dataset.rate),
         date: new Date().toISOString()
       });
+      await saveData();
+      render();
+    };
+  });
+  el.querySelectorAll('.unmark-paid-btn').forEach(btn=>{
+    btn.onclick = async ()=>{
+      if(!confirm('Undo this payment? It will show as pending again.')) return;
+      data.payments = data.payments.filter(p=>p.id!==btn.dataset.id);
       await saveData();
       render();
     };
@@ -1087,9 +1191,9 @@ function renderPayments(el){
     };
   });
   el.querySelector('#export-payments-btn').onclick = ()=>{
-    const rows = data.students.map(s=>{
+    const rows = eligibleStudents.map(s=>{
       const payment = paidThisMonth.find(p=>p.studentId===s.id);
-      const rate = RATES[s.gender];
+      const rate = rateFor(s);
       return [s.name, s.gender, rate, payment?'Paid':'Pending', payment?new Date(payment.date).toLocaleDateString('en-IN'):''];
     });
     downloadCSV(`payments-${mk}.csv`, ['Name','Gender','Rate','Status','Paid Date'], rows);
@@ -1097,32 +1201,97 @@ function renderPayments(el){
 }
 
 // ---------- TIFFIN LOG (irregular friends) ----------
+// ---------- TIFFIN LOG (itemized menu) ----------
+let editingTiffinId = null;
 function renderTiffin(el){
   const todayLogs = data.tiffinLog.slice().reverse();
   const totalUnpaid = data.tiffinLog.filter(t=>!t.paid).reduce((s,t)=>s+t.amount,0);
+
+  function itemRowsHtml(prefix, selectedItems){
+    selectedItems = selectedItems || [];
+    return [0,1,2].map(i=>{
+      const sel = selectedItems[i] || {};
+      return `
+      <div class="row">
+        <div style="flex:2;">
+          <label>Item</label>
+          <select class="${prefix}-item" data-idx="${i}">
+            <option value="">— none —</option>
+            ${data.tiffinMenu.map(m=>`<option value="${m.id}" ${sel.itemId===m.id?'selected':''}>${m.name} — ${fmtMoney(m.price)}</option>`).join('')}
+          </select>
+        </div>
+        <div><label>Qty</label><input class="${prefix}-qty" data-idx="${i}" type="number" min="0" value="${sel.qty||''}" placeholder="0"></div>
+      </div>`;
+    }).join('');
+  }
+
+  function readItemRows(prefix){
+    const items = [];
+    for(let i=0;i<3;i++){
+      const itemId = el.querySelector(`.${prefix}-item[data-idx="${i}"]`).value;
+      const qty = parseInt(el.querySelector(`.${prefix}-qty[data-idx="${i}"]`).value) || 0;
+      if(itemId && qty>0){
+        const menuItem = data.tiffinMenu.find(m=>m.id===itemId);
+        if(menuItem) items.push({ itemId, itemName: menuItem.name, qty, price: menuItem.price });
+      }
+    }
+    return items;
+  }
+
   el.innerHTML = `
     <div class="summary-strip">
       <div class="stat"><div class="n">${fmtMoney(totalUnpaid)}</div><div class="l">Unpaid tiffin dues</div></div>
-      <div class="stat"><div class="n">₹${TIFFIN_RATE}</div><div class="l">Rate per tiffin</div></div>
+      <div class="stat"><div class="n">${data.tiffinMenu.length}</div><div class="l">Menu items</div></div>
     </div>
     <div class="card">
-      <h2>Log a tiffin (irregular / one-off eaters)</h2>
+      <h2>Menu &amp; prices</h2>
+      ${data.tiffinMenu.map((m,i)=>`
+        <div class="row">
+          <div><label>Item name</label><input class="menu-name" data-idx="${i}" value="${m.name}"></div>
+          <div><label>Price</label><input class="menu-price" data-idx="${i}" type="number" min="0" value="${m.price}"></div>
+          <button class="del menu-remove" data-idx="${i}" style="align-self:flex-end;margin-bottom:8px;">Remove</button>
+        </div>
+      `).join('')}
+      <div style="display:flex;gap:8px;">
+        <button class="ghost" id="add-menu-item-btn" style="flex:1;">+ Add item</button>
+        <button class="primary" id="save-menu-btn" style="flex:1;">Save menu</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Log an order</h2>
       <div class="row">
         <div><label>Name</label><input id="t-name" placeholder="Who ate"></div>
-        <div><label>Tiffins</label><input id="t-count" type="number" min="1" value="1"></div>
-      </div>
-      <div class="row">
         <div><label>Date</label><input id="t-date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
       </div>
-      <button class="primary" id="add-tiffin-btn">Log entry</button>
+      <div class="student-meta" style="margin:6px 0;">Add up to 3 items for this order</div>
+      ${itemRowsHtml('t')}
+      <button class="primary" id="add-tiffin-btn" style="margin-top:6px;">Log entry</button>
     </div>
     <div class="card">
       <h2>Recent entries</h2>
-      ${todayLogs.length===0 ? '<div class="empty">No tiffin entries yet.</div>' : todayLogs.map(t=>`
+      ${todayLogs.length===0 ? '<div class="empty">No tiffin entries yet.</div>' : todayLogs.map(t=>{
+        const breakdown = t.items && t.items.length
+          ? t.items.map(i=>`${i.qty}× ${i.itemName}`).join(', ')
+          : `${t.count||1} tiffin${(t.count||1)>1?'s':''}`;
+        if(editingTiffinId===t.id){
+          return `
+          <div class="tiffin-entry" style="flex-direction:column;align-items:stretch;">
+            <div class="row">
+              <div><label>Name</label><input class="edit-t-name" value="${t.name}"></div>
+              <div><label>Date</label><input class="edit-t-date" type="date" value="${t.date}"></div>
+            </div>
+            ${itemRowsHtml('et', t.items)}
+            <div style="display:flex;gap:8px;">
+              <button class="primary save-tiffin-edit" data-id="${t.id}" style="flex:1;">Save</button>
+              <button class="ghost cancel-tiffin-edit" style="flex:1;">Cancel</button>
+            </div>
+          </div>`;
+        }
+        return `
         <div class="tiffin-entry">
           <div>
             <div style="font-weight:600;">${t.name}</div>
-            <div style="font-size:11px;color:var(--ink-soft);">${t.count} tiffin${t.count>1?'s':''} · ${new Date(t.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div>
+            <div style="font-size:11px;color:var(--ink-soft);">${breakdown} · ${new Date(t.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="amt">${fmtMoney(t.amount)}</span>
@@ -1130,21 +1299,47 @@ function renderTiffin(el){
               <button class="ghost remind-tiffin" data-id="${t.id}">Remind</button>
               <button class="ghost pay-tiffin" data-id="${t.id}">Mark paid</button>
             `}
+            <button class="ghost edit-tiffin-btn" data-id="${t.id}">Edit</button>
           </div>
         </div>
-      `).join('')}
+      `;}).join('')}
     </div>
     <button class="ghost" id="export-tiffin-btn" style="width:100%;">Export all entries (CSV)</button>
   `;
+
+  el.querySelectorAll('.menu-remove').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const idx = parseInt(btn.dataset.idx);
+      if(data.tiffinMenu.length<=1){ alert('Keep at least one menu item.'); return; }
+      data.tiffinMenu.splice(idx,1);
+      await saveData();
+      render();
+    };
+  });
+  el.querySelector('#add-menu-item-btn').onclick = async ()=>{
+    data.tiffinMenu.push({ id: uid(), name: 'New item', price: 0 });
+    await saveData();
+    render();
+  };
+  el.querySelector('#save-menu-btn').onclick = async ()=>{
+    el.querySelectorAll('.menu-name').forEach(inp=>{
+      data.tiffinMenu[parseInt(inp.dataset.idx)].name = inp.value.trim() || data.tiffinMenu[parseInt(inp.dataset.idx)].name;
+    });
+    el.querySelectorAll('.menu-price').forEach(inp=>{
+      data.tiffinMenu[parseInt(inp.dataset.idx)].price = parseFloat(inp.value) || 0;
+    });
+    await saveData();
+    showToast('Menu saved.');
+    render();
+  };
   el.querySelector('#add-tiffin-btn').onclick = async ()=>{
     const name = el.querySelector('#t-name').value.trim();
-    const count = parseInt(el.querySelector('#t-count').value) || 1;
     const dateVal = el.querySelector('#t-date').value;
     if(!name){ alert('Please enter a name'); return; }
-    data.tiffinLog.push({
-      id: uid(), name, count, amount: count*TIFFIN_RATE,
-      date: dateVal, paid: false
-    });
+    const items = readItemRows('t');
+    if(items.length===0){ alert('Please select at least one item and quantity'); return; }
+    const amount = items.reduce((s,i)=>s+i.price*i.qty,0);
+    data.tiffinLog.push({ id: uid(), name, items, amount, date: dateVal, paid: false });
     await saveData();
     render();
   };
@@ -1160,17 +1355,44 @@ function renderTiffin(el){
     btn.onclick = ()=>{
       const entry = data.tiffinLog.find(t=>t.id===btn.dataset.id);
       if(!entry) return;
-      const message = `Hi ${entry.name}, just a reminder — you have a pending tiffin payment of ${fmtMoney(entry.amount)} (${entry.count} tiffin${entry.count>1?'s':''} on ${new Date(entry.date).toLocaleDateString('en-IN')}). Please settle when you can. Thanks!`;
+      const breakdown = entry.items && entry.items.length ? entry.items.map(i=>`${i.qty}x ${i.itemName}`).join(', ') : `${entry.count||1} tiffin(s)`;
+      const message = `Hi ${entry.name}, just a reminder — you have a pending payment of ${fmtMoney(entry.amount)} for ${breakdown} on ${new Date(entry.date).toLocaleDateString('en-IN')}. Please settle when you can. Thanks!`;
       sendReminder(entry.name, null, message);
     };
   });
+  el.querySelectorAll('.edit-tiffin-btn').forEach(btn=>{
+    btn.onclick = ()=>{ editingTiffinId = btn.dataset.id; renderTiffin(el); };
+  });
+  el.querySelectorAll('.cancel-tiffin-edit').forEach(btn=>{
+    btn.onclick = ()=>{ editingTiffinId = null; renderTiffin(el); };
+  });
+  el.querySelectorAll('.save-tiffin-edit').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const t = data.tiffinLog.find(x=>x.id===btn.dataset.id);
+      if(!t) return;
+      t.name = el.querySelector('.edit-t-name').value.trim() || t.name;
+      t.date = el.querySelector('.edit-t-date').value || t.date;
+      const items = readItemRows('et');
+      if(items.length===0){ alert('Please select at least one item and quantity'); return; }
+      t.items = items;
+      t.amount = items.reduce((s,i)=>s+i.price*i.qty,0);
+      editingTiffinId = null;
+      await saveData();
+      render();
+    };
+  });
   el.querySelector('#export-tiffin-btn').onclick = ()=>{
-    const rows = data.tiffinLog.map(t=>[t.name, t.count, t.amount, new Date(t.date).toLocaleDateString('en-IN'), t.paid?'Paid':'Pending']);
-    downloadCSV(`tiffin-log.csv`, ['Name','Tiffins','Amount','Date','Status'], rows);
+    const rows = data.tiffinLog.map(t=>{
+      const breakdown = t.items && t.items.length ? t.items.map(i=>`${i.qty}x ${i.itemName}`).join('; ') : `${t.count||1} tiffin(s)`;
+      return [t.name, breakdown, t.amount, new Date(t.date).toLocaleDateString('en-IN'), t.paid?'Paid':'Pending'];
+    });
+    downloadCSV(`tiffin-log.csv`, ['Name','Items','Amount','Date','Status'], rows);
   };
 }
 
 // ---------- SWEETS & NAMKEEN ----------
+let editingSaleId = null;
+let editingProductionId = null;
 function renderSweets(el){
   const mk = monthKey(sweetMonth);
   const salesThisMonth = data.sweetSales.filter(s=>s.date.slice(0,7)===mk);
@@ -1219,7 +1441,19 @@ function renderSweets(el){
         <div style="margin-top:10px;">
           ${recentProduction.map(p=>{
             const product = data.products.find(x=>x.id===p.productId);
-            return `<div class="tiffin-entry"><div style="font-size:12.5px;">${product?product.name:'Unknown'} · ${p.qtyKg}kg</div><div style="font-size:11px;color:var(--ink-soft);">${new Date(p.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div></div>`;
+            if(editingProductionId===p.id){
+              return `<div class="tiffin-entry" style="flex-direction:column;align-items:stretch;">
+                <div class="row">
+                  <div><label>Quantity (kg)</label><input class="edit-pr-qty" data-id="${p.id}" type="number" min="0.1" step="0.1" value="${p.qtyKg}"></div>
+                  <div><label>Date</label><input class="edit-pr-date" data-id="${p.id}" type="date" value="${p.date}"></div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                  <button class="primary save-production-edit" data-id="${p.id}" style="flex:1;">Save</button>
+                  <button class="ghost cancel-production-edit" style="flex:1;">Cancel</button>
+                </div>
+              </div>`;
+            }
+            return `<div class="tiffin-entry"><div style="font-size:12.5px;">${product?product.name:'Unknown'} · ${p.qtyKg}kg</div><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--ink-soft);">${new Date(p.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</span><button class="ghost edit-production-btn" data-id="${p.id}">Edit</button><button class="del del-production-btn" data-id="${p.id}">Remove</button></div></div>`;
           }).join('')}
         </div>
       ` : ''}
@@ -1264,13 +1498,41 @@ function renderSweets(el){
       <h2>Recent sales</h2>
       ${recentSales.length===0 ? '<div class="empty">No sales logged yet.</div>' : recentSales.map(s=>{
         const product = data.products.find(p=>p.id===s.productId);
+        if(editingSaleId===s.id){
+          return `
+          <div class="tiffin-entry" style="flex-direction:column;align-items:stretch;">
+            <div class="row">
+              <div style="flex:2;">
+                <label>Item</label>
+                <select class="edit-sw-item" data-id="${s.id}">
+                  ${data.products.map(p=>`<optgroup label="${p.name}">
+                    ${p.packets.map((pk,i)=>`<option value="${p.id}::${i}" ${p.id===s.productId&&pk.size===s.packetSize?'selected':''}>${pk.size} — ${fmtMoney(pk.price)}</option>`).join('')}
+                  </optgroup>`).join('')}
+                </select>
+              </div>
+              <div><label>Packets</label><input class="edit-sw-qty" data-id="${s.id}" type="number" min="1" value="${s.qty}"></div>
+            </div>
+            <div class="row">
+              <div><label>Buyer</label><input class="edit-sw-buyer" data-id="${s.id}" value="${s.buyer||''}"></div>
+              <div><label>Date</label><input class="edit-sw-date" data-id="${s.id}" type="date" value="${s.date}"></div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="primary save-sale-edit" data-id="${s.id}" style="flex:1;">Save</button>
+              <button class="ghost cancel-sale-edit" style="flex:1;">Cancel</button>
+            </div>
+          </div>`;
+        }
         return `
           <div class="tiffin-entry">
             <div>
               <div style="font-weight:600;">${product?product.name:'Unknown'} · ${s.packetSize}</div>
               <div style="font-size:11px;color:var(--ink-soft);">${s.qty} packet${s.qty>1?'s':''}${s.buyer?' · '+s.buyer:''} · ${new Date(s.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div>
             </div>
-            <span class="amt">${fmtMoney(s.amount)}</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="amt">${fmtMoney(s.amount)}</span>
+              <button class="ghost edit-sale-btn" data-id="${s.id}">Edit</button>
+              <button class="del del-sale-btn" data-id="${s.id}">Remove</button>
+            </div>
           </div>
         `;
       }).join('')}
@@ -1287,6 +1549,23 @@ function renderSweets(el){
     await saveData();
     render();
   };
+  el.querySelectorAll('.edit-production-btn').forEach(btn=>{
+    btn.onclick = ()=>{ editingProductionId = btn.dataset.id; renderSweets(el); };
+  });
+  el.querySelectorAll('.cancel-production-edit').forEach(btn=>{
+    btn.onclick = ()=>{ editingProductionId = null; renderSweets(el); };
+  });
+  el.querySelectorAll('.save-production-edit').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const p = data.production.find(x=>x.id===btn.dataset.id);
+      if(!p) return;
+      p.qtyKg = parseFloat(el.querySelector(`.edit-pr-qty[data-id="${p.id}"]`).value) || p.qtyKg;
+      p.date = el.querySelector(`.edit-pr-date[data-id="${p.id}"]`).value || p.date;
+      editingProductionId = null;
+      await saveData();
+      render();
+    };
+  });
 
   el.querySelector('#save-rates-btn').onclick = async ()=>{
     el.querySelectorAll('.packet-price').forEach(inp=>{
@@ -1321,9 +1600,52 @@ function renderSweets(el){
     });
     downloadCSV('sweets-namkeen-sales.csv', ['Product','Packet Size','Packets Sold','Amount','Buyer','Date'], rows);
   };
+  el.querySelectorAll('.del-production-btn').forEach(btn=>{
+    btn.onclick = async ()=>{
+      if(!confirm('Remove this production entry?')) return;
+      data.production = data.production.filter(p=>p.id!==btn.dataset.id);
+      await saveData();
+      render();
+    };
+  });
+  el.querySelectorAll('.del-sale-btn').forEach(btn=>{
+    btn.onclick = async ()=>{
+      if(!confirm('Remove this sale entry?')) return;
+      data.sweetSales = data.sweetSales.filter(s=>s.id!==btn.dataset.id);
+      await saveData();
+      render();
+    };
+  });
+  el.querySelectorAll('.edit-sale-btn').forEach(btn=>{
+    btn.onclick = ()=>{ editingSaleId = btn.dataset.id; renderSweets(el); };
+  });
+  el.querySelectorAll('.cancel-sale-edit').forEach(btn=>{
+    btn.onclick = ()=>{ editingSaleId = null; renderSweets(el); };
+  });
+  el.querySelectorAll('.save-sale-edit').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const s = data.sweetSales.find(x=>x.id===btn.dataset.id);
+      if(!s) return;
+      const [productId, idx] = el.querySelector(`.edit-sw-item[data-id="${s.id}"]`).value.split('::');
+      const product = data.products.find(p=>p.id===productId);
+      const packet = product ? product.packets[parseInt(idx)] : null;
+      const qty = parseInt(el.querySelector(`.edit-sw-qty[data-id="${s.id}"]`).value) || s.qty;
+      if(!packet || qty<=0){ alert('Please enter a valid number of packets'); return; }
+      s.productId = productId;
+      s.packetSize = packet.size;
+      s.qty = qty;
+      s.amount = Math.round(packet.price * qty);
+      s.buyer = el.querySelector(`.edit-sw-buyer[data-id="${s.id}"]`).value.trim();
+      s.date = el.querySelector(`.edit-sw-date[data-id="${s.id}"]`).value || s.date;
+      editingSaleId = null;
+      await saveData();
+      render();
+    };
+  });
 }
 
 // ---------- EXPENSES ----------
+let editingExpenseId = null;
 function renderExpenses(el){
   const mk = monthKey(new Date());
   const thisMonth = data.expenses.filter(e=>e.date.slice(0,7)===mk);
@@ -1353,7 +1675,25 @@ function renderExpenses(el){
     </div>
     <div class="card">
       <h2>Recent expenses</h2>
-      ${recent.length===0 ? '<div class="empty">No expenses logged yet.</div>' : recent.map(e=>`
+      ${recent.length===0 ? '<div class="empty">No expenses logged yet.</div>' : recent.map(e=>{
+        if(editingExpenseId===e.id){
+          return `
+          <div class="tiffin-entry" style="flex-direction:column;align-items:stretch;">
+            <div class="row">
+              <div><label>Category</label><select class="edit-ex-cat" data-id="${e.id}">${CATEGORIES.map(c=>`<option value="${c}" ${c===e.category?'selected':''}>${c}</option>`).join('')}</select></div>
+              <div><label>Amount</label><input class="edit-ex-amt" data-id="${e.id}" type="number" min="1" value="${e.amount}"></div>
+            </div>
+            <div class="row">
+              <div><label>Note</label><input class="edit-ex-note" data-id="${e.id}" value="${e.note||''}"></div>
+              <div><label>Date</label><input class="edit-ex-date" data-id="${e.id}" type="date" value="${e.date}"></div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="primary save-expense-edit" data-id="${e.id}" style="flex:1;">Save</button>
+              <button class="ghost cancel-expense-edit" style="flex:1;">Cancel</button>
+            </div>
+          </div>`;
+        }
+        return `
         <div class="tiffin-entry">
           <div>
             <div style="font-weight:600;">${e.category}${e.note?' · '+e.note:''}</div>
@@ -1361,10 +1701,11 @@ function renderExpenses(el){
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="amt">${fmtMoney(e.amount)}</span>
+            <button class="ghost edit-expense-btn" data-id="${e.id}">Edit</button>
             <button class="del" data-id="${e.id}">Remove</button>
           </div>
         </div>
-      `).join('')}
+      `;}).join('')}
     </div>
     <button class="ghost" id="export-expenses-btn" style="width:100%;">Export all expenses (CSV)</button>
   `;
@@ -1379,6 +1720,25 @@ function renderExpenses(el){
     await saveData();
     render();
   };
+  el.querySelectorAll('.edit-expense-btn').forEach(btn=>{
+    btn.onclick = ()=>{ editingExpenseId = btn.dataset.id; renderExpenses(el); };
+  });
+  el.querySelectorAll('.cancel-expense-edit').forEach(btn=>{
+    btn.onclick = ()=>{ editingExpenseId = null; renderExpenses(el); };
+  });
+  el.querySelectorAll('.save-expense-edit').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const ex = data.expenses.find(x=>x.id===btn.dataset.id);
+      if(!ex) return;
+      ex.category = el.querySelector(`.edit-ex-cat[data-id="${ex.id}"]`).value;
+      ex.amount = parseFloat(el.querySelector(`.edit-ex-amt[data-id="${ex.id}"]`).value) || ex.amount;
+      ex.note = el.querySelector(`.edit-ex-note[data-id="${ex.id}"]`).value.trim();
+      ex.date = el.querySelector(`.edit-ex-date[data-id="${ex.id}"]`).value || ex.date;
+      editingExpenseId = null;
+      await saveData();
+      render();
+    };
+  });
   el.querySelectorAll('.del[data-id]').forEach(btn=>{
     btn.onclick = async ()=>{
       const idx = data.expenses.findIndex(e=>e.id===btn.dataset.id);
@@ -1539,5 +1899,5 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
-</body>
+ </body>
 </html>
